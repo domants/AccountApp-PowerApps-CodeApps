@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "appId": null,
+  "appDisplayName": "Account Practice App",
+  "region": "prod",
+  "appType": "CodeApp",
+  "environmentId": "6304673b-1abf-e39a-bb96-f02a52fbf391",
+  "description": " ",
+  "buildPath": "./dist",
+  "buildEntryPoint": "index.html",
+  "localAppUrl": "http://localhost:3000",
+  "logoPath": "Default",
+  "connectionReferences": {},
+  "databaseReferences": {
+    "default.cds": {
+      "dataSources": {
+        "accounts": {
+          "entitySetName": "accounts",
+          "logicalName": "account"
+        }
+      },
+      "environmentVariableName": ""
+    }
+  }
+}
