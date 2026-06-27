@@ -1,18 +1,12 @@
-import { queryOptions } from "@tanstack/react-query";
-
-import { AccountsService } from "../generated/services/AccountsService"; //service methods for interacting within account table
-import type { IGetAllOptions } from "../generated/models/CommonModels";
-
-const fetchAccounts = async () => {
-  const options: IGetAllOptions = {
-    select: ["accountid", "accountnumber", "name", "address1_city"],
-    top: 1000,
-    orderBy: ["name asc"],
-  };
-  const result = await AccountsService.getAll(options);
-  return result.data || [];
-};
+import { queryOptions } from '@tanstack/react-query';
+import { fetchAccounts } from './api';
 
 export const fetchAccountQueryOptions = () => {
-  return queryOptions({ queryKey: ["account"], queryFn: fetchAccounts });
+  return queryOptions({
+    queryKey: ['account'],
+    queryFn: fetchAccounts,
+    refetchOnWindowFocus: false, //the query will not refetch on window focus
+    //staleTime: 1000 * 60 * 5, // treat data as fresh for 5 min — no refetch on remount
+    //gcTime: 1000 * 60 * 30, // keep cached data 30 min even when no component uses it
+  });
 };

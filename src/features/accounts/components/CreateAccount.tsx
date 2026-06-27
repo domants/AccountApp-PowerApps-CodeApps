@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useCreateAccount } from "../../../mutations/useAccountMutations";
+import { useState } from 'react';
+import { useCreateAccount } from '../../../mutations/useAccountMutations';
 
 function CreateAccount() {
-  const [name, setName] = useState<string>("");
-  const [accountnumber, setAccountNumber] = useState<string>("");
+  const [name, setName] = useState<string>('');
+  const [accountnumber, setAccountNumber] = useState<string>('');
   const createAccount = useCreateAccount();
 
   const handleCreate = (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -15,12 +15,12 @@ function CreateAccount() {
       { name, accountnumber }, //arg 1: variables (the data to send)
       {
         //arg 2: options (callbacks for this specific call)
-        onSuccess: (result) => {
+        onSuccess: (data) => {
           //console.log(`Account Created: ${result?.data?.name}`);
-          console.log(`New ID: ${result?.data?.accountid}`);
+          console.log(`New ID: ${data?.data?.accountid}`);
 
-          setName("");
-          setAccountNumber("");
+          setName('');
+          setAccountNumber('');
         },
         onError: (error) => {
           console.error(`Created failed ${error.message}`);
@@ -48,9 +48,7 @@ function CreateAccount() {
       </form>
 
       {createAccount.isError && (
-        <p className="text-red-600">
-          Failed to create account. Please try again.
-        </p>
+        <p className="text-red-600">Failed to create account. Please try again.</p>
       )}
     </div>
   );

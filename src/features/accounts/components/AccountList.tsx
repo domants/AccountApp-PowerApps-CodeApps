@@ -1,11 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchAccountQueryOptions } from "../../../queryOptions/fetchAccountQueryOptions";
-import { useState } from "react";
-import { useDeleteAccount } from "../../../mutations/useAccountMutations";
+import { useQuery } from '@tanstack/react-query';
+import { fetchAccountQueryOptions } from '../../../queryOptions/fetchAccountQueryOptions';
+import { useState } from 'react';
+import { useDeleteAccount } from '../../../mutations/useAccountMutations';
 
 function AccountList() {
   const { data: accounts, isPending } = useQuery(fetchAccountQueryOptions()); //get data in server side
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   const filteredAccount = accounts?.filter((account) =>
     account.name?.toLowerCase().includes(searchTerm?.toLowerCase()),
