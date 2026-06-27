@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchAccountQueryOptions } from '../../../queryOptions/fetchAccountQueryOptions';
+import { fetchAccountQueryOptions } from '../queryOptions/fetchAccountQueryOptions';
 import { useState } from 'react';
-import { useDeleteAccount } from '../../../mutations/useAccountMutations';
+import { useDeleteAccount } from '../mutations/useDeleteAccount';
 
 function AccountList() {
   const { data: accounts, isPending } = useQuery(fetchAccountQueryOptions()); //get data in server side

@@ -1,6 +1,6 @@
-import { AccountsService } from '../generated';
-import type { Accounts } from '../generated/models/AccountsModel';
-import type { IGetAllOptions } from '../generated/models/CommonModels';
+import { AccountsService } from '../../../generated';
+import type { Accounts } from '../../../generated/models/AccountsModel';
+import type { IGetAllOptions } from '../../../generated/models/CommonModels';
 
 export const fetchAccounts = async () => {
   const baseOptions: IGetAllOptions = {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useCreateAccount } from '../../../mutations/useAccountMutations';
+import { useCreateAccount } from '../mutations/useCreateAccount';
 
 function CreateAccount() {
   const [name, setName] = useState<string>('');
