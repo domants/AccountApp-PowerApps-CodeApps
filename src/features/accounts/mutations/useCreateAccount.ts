@@ -4,7 +4,7 @@ import { AccountsService } from '../../../generated';
 import type { AccountsBase } from '../../../generated/models/AccountsModel';
 
 export const useCreateAccount = () => {
-  const clientQuery = useQueryClient();
+  const queryClient = useQueryClient();
   const queryKey = fetchAccountQueryOptions().queryKey;
 
   return useMutation({
@@ -13,9 +13,9 @@ export const useCreateAccount = () => {
     ) => AccountsService.create(newAccount as Omit<AccountsBase, 'accountid'>), //Omit<TypeAllowed, KeysToRemove>
 
     onSuccess: (data) => {
-      if (data.data) clientQuery.setQueryData(queryKey, (old = []) => [...old, data?.data]);
+      if (data.data) queryClient.setQueryData(queryKey, (old = []) => [...old, data?.data]);
     },
 
-    onSettled: () => clientQuery.invalidateQueries({ queryKey }), //Mutate the server - then invalidate the cache that's now stale/old then refetch for new data
+    onSettled: () => queryClient.invalidateQueries({ queryKey }), //Mutate the server - then invalidate the cache that's now stale/old then refetch for new data
   });
 };
