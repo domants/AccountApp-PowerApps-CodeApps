@@ -44,7 +44,6 @@ Add `baseUrl` and `paths` to **both** tsconfig files.
   "files": [],
   "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
   "compilerOptions": {
-    "baseUrl": ".", // ← add this
     "paths": {
       // ← add this
       "@/*": ["./src/*"] // ← add this
@@ -62,7 +61,6 @@ alias silently won't work):
 {
   "compilerOptions": {
     // ...your existing options (target, lib, module, etc.)...
-    "baseUrl": ".", // ← add this (directly inside compilerOptions)
     "paths": {
       // ← add this
       "@/*": ["./src/*"] // ← add this
