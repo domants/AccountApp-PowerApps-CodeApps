@@ -73,18 +73,6 @@ alias silently won't work):
 }
 ```
 
-> ❌ Wrong — alias buried in a nested `compilerOptions`, so it does nothing:
->
-> ```json
-> "compilerOptions": {
->     "skipLibCheck": true,
->     "compilerOptions": {          // ← this nested block is invalid — remove it
->       "baseUrl": ".",
->       "paths": { "@/*": ["./src/*"] }
->     }
-> }
-> ```
-
 ---
 
 ## Step 3 — Update `vite.config.ts` (merge, don't overwrite)
