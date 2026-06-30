@@ -8,7 +8,7 @@ add `base: './'` manually).
 > Run everything from your code app's project root.
 >
 > **About the `← add this` arrows below:** they mark the exact lines you need to
-> add or change. They are annotations for _you_ — do **not** type the arrows or
+> add or change. They are annotations for *you* — do **not** type the arrows or
 > their text into the actual files.
 
 ---
@@ -24,7 +24,7 @@ npm install tailwindcss @tailwindcss/vite
 Replace the entire contents of `src/index.css` with:
 
 ```css
-@import 'tailwindcss';
+@import "tailwindcss";
 ```
 
 > Note: shadcn's `init` does **not** install Tailwind for you in an existing
@@ -35,41 +35,61 @@ Replace the entire contents of `src/index.css` with:
 
 ## Step 2 — Configure the `@` path alias
 
-Add `baseUrl` and `paths` to **both** tsconfig files.
+Add the `@` path alias to **both** tsconfig files (no `baseUrl` required).
 
 `tsconfig.json`:
 
 ```json
 {
   "files": [],
-  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
   "compilerOptions": {
-    "paths": {
-      // ← add this
-      "@/*": ["./src/*"] // ← add this
-    } // ← add this
+    "paths": {                       // ← add this
+      "@/*": ["./src/*"]             // ← add this (relative ./ prefix, no baseUrl needed)
+    }                                // ← add this
   }
 }
 ```
 
-`tsconfig.app.json` — add `baseUrl` and `paths` as **direct** members of
-`compilerOptions`. Do **not** nest them inside a second `compilerOptions` block
-(that's the bug to avoid — TypeScript ignores a nested `compilerOptions`, so the
-alias silently won't work):
+`tsconfig.app.json` — add `paths` as a **direct** member of `compilerOptions`.
+Do **not** nest it inside a second `compilerOptions` block (that's the bug to
+avoid — TypeScript ignores a nested `compilerOptions`, so the alias silently
+won't work):
 
 ```json
 {
   "compilerOptions": {
     // ...your existing options (target, lib, module, etc.)...
-    "paths": {
-      // ← add this
-      "@/*": ["./src/*"] // ← add this
-    } // ← add this
+    "paths": {                       // ← add this (directly inside compilerOptions)
+      "@/*": ["./src/*"]             // ← add this
+    }                                // ← add this
     // ...rest of your existing options...
   },
   "include": ["src"]
 }
 ```
+
+> **No `baseUrl` needed.** Older shadcn/Vite docs and many templates add
+> `"baseUrl": "."` alongside `paths`. TypeScript 6.0 deprecated `baseUrl` (removed
+> in 7.0), so if you add it you'll get: *"Option 'baseUrl' is deprecated and will
+> stop functioning in TypeScript 7.0."* Since `paths` already uses the relative
+> `./src/*` prefix, you don't need `baseUrl` at all — just leave it out. Don't
+> reach for `"ignoreDeprecations": "6.0"`; that only mutes the warning and breaks
+> at 7.0 anyway.
+
+> ❌ Wrong — alias buried in a nested `compilerOptions`, so it does nothing:
+>
+> ```json
+> "compilerOptions": {
+>     "skipLibCheck": true,
+>     "compilerOptions": {          // ← this nested block is invalid — remove it
+>       "paths": { "@/*": ["./src/*"] }
+>     }
+> }
+> ```
 
 ---
 
@@ -85,21 +105,20 @@ Then add the Tailwind plugin and the `@` alias **into** the existing config,
 keeping `react()` and `powerApps()`:
 
 ```ts
-import path from 'path'; // ← add this
+import path from 'path';                                  // ← add this
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { powerApps } from '@microsoft/power-apps-vite/plugin';
-import tailwindcss from '@tailwindcss/vite'; // ← add this
+import tailwindcss from '@tailwindcss/vite';               // ← add this
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), powerApps(), tailwindcss()], // ← add tailwindcss()
+  plugins: [react(), powerApps(), tailwindcss()],          // ← add tailwindcss()
   server: {
-    port: 3000, // the Power Apps SDK requires port 3000
+    port: 3000,        // the Power Apps SDK requires port 3000
     strictPort: true,
   },
-  resolve: {
-    // ← add this whole block
+  resolve: {                                               // ← add this whole block
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
@@ -108,7 +127,7 @@ export default defineConfig({
 ```
 
 > Do **not** add `base: './'`. The `powerApps()` plugin sets the asset base path
-> automatically. Adding it manually is only needed when you are _not_ using that
+> automatically. Adding it manually is only needed when you are *not* using that
 > plugin.
 
 ---
@@ -140,7 +159,7 @@ npx shadcn@latest add button card input
 Each component lands in `src/components/ui/`. Import via the alias:
 
 ```tsx
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 ```
 
 The component docs (https://ui.shadcn.com/docs/components) show each component's
@@ -182,7 +201,7 @@ blank screen on the managed host.
 
 - [ ] `tailwindcss` and `@tailwindcss/vite` are in `package.json`
 - [ ] `src/index.css` starts with `@import "tailwindcss";` (plus the theme block init added)
-- [ ] `@/*` alias is a direct member of `compilerOptions` in both tsconfig files
+- [ ] `@/*` alias (under `paths`) is a direct member of `compilerOptions` in both tsconfig files — no `baseUrl`
 - [ ] `vite.config.ts` keeps `powerApps()` and has no manual `base`
 - [ ] `components.json` and `src/lib/utils.ts` exist
 - [ ] A shadcn component renders styled in the Local Play URL
