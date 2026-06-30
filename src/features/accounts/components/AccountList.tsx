@@ -1,3 +1,22 @@
+import { MoreHorizontalIcon } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+
 import { useQuery } from '@tanstack/react-query';
 import { fetchAccountQueryOptions } from '../queryOptions/fetchAccountQueryOptions';
 import { useState } from 'react';
@@ -36,23 +55,55 @@ function AccountList() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        {isPending ? (
-          <p>Loading...</p>
-        ) : (
-          filteredAccount?.map((account) => (
-            <div key={account.accountid} className="flex gap-2">
-              {account.name}
-
-              <button
-                className="border-2 cursor-pointer"
-                onClick={() => handleDelete(account.accountid)}
-              >
-                Delete Account
-              </button>
-            </div>
-          ))
-        )}
       </h1>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Account Number</TableHead>
+            <TableHead>Account Name</TableHead>
+            <TableHead>Address</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {isPending ? (
+            <p>Loading...</p>
+          ) : (
+            filteredAccount?.map((account) => (
+              <TableRow>
+                <TableCell key={account.accountid} className="font-medium">
+                  {account.accountnumber}
+                </TableCell>
+                <TableCell>{account.name}</TableCell>
+                <TableCell>{account.address1_city}</TableCell>
+                <TableCell className="text-right">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger
+                      render={
+                        <Button variant="ghost" size="icon" className="size-8">
+                          <MoreHorizontalIcon />
+                          <span className="sr-only">Open menu</span>
+                        </Button>
+                      }
+                    />
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <DropdownMenuItem>Duplicate</DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        variant="destructive"
+                        onClick={() => handleDelete(account.accountid)}
+                      >
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            ))
+          )}
+        </TableBody>
+      </Table>
     </>
   );
 }
