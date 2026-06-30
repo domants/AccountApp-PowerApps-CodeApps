@@ -80,17 +80,6 @@ won't work):
 > reach for `"ignoreDeprecations": "6.0"`; that only mutes the warning and breaks
 > at 7.0 anyway.
 
-> ❌ Wrong — alias buried in a nested `compilerOptions`, so it does nothing:
->
-> ```json
-> "compilerOptions": {
->     "skipLibCheck": true,
->     "compilerOptions": {          // ← this nested block is invalid — remove it
->       "paths": { "@/*": ["./src/*"] }
->     }
-> }
-> ```
-
 ---
 
 ## Step 3 — Update `vite.config.ts` (merge, don't overwrite)
