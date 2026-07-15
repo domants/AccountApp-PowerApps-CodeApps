@@ -1,3 +1,14 @@
+# Stacks Used
+- React
+- TypeScript
+- Vite
+- tailwind css
+- React Router
+- shadcn/ui (for production ready components)
+- TanStack Query (For Dataverse/API data fetching)
+
+
+
 # Installing shadcn/ui in a Power Apps Code App
 
 A Power Apps Code App is a Vite + React + TypeScript project, so you use shadcn's
