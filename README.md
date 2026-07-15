@@ -6,7 +6,7 @@
 - React Router
 - shadcn/ui (for production ready components)
 - TanStack Query (For Dataverse/API data fetching)
-
+- Zustand (For State Management — Not in used from this build)
 
 
 # Installing shadcn/ui in a Power Apps Code App
