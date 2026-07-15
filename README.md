@@ -6,6 +6,10 @@
 - React Router
 - shadcn/ui (for production ready components)
 - TanStack Query (For Dataverse/API data fetching)
+- Icons:
+  - https://github.com/tailwindlabs/heroicons
+  - https://heroicons.dev/
+
 - Zustand (For State Management — Not in used from this build)
 
 
